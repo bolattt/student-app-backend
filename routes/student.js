@@ -15,7 +15,11 @@ students.get("/:id", (req, res) => {
   try {
     const { id } = req.params;
     const student = studentData.students.find((student) => student.id === id);
-    res.status(200).json({ data: student });
+    if (student) {
+      res.status(200).json({ data: student });
+    } else {
+      res.status(404).json({ error: `Student with id ${id} not found` });
+    }
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
