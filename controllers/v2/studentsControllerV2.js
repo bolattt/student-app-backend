@@ -1,13 +1,13 @@
 const express = require("express");
-const studentsController = express.Router();
+const studentsControllerV2 = express.Router();
 const {
-  getAllStudents,
-  getStudentById,
-} = require("../queries/studentsQueries");
+  getAllStudentsV2,
+  getStudentByIdV2,
+} = require("../../queries/v2/studentsQueriesV2");
 
-studentsController.get("/", (req, res) => {
+studentsControllerV2.get("/", (req, res) => {
   try {
-    const students = getAllStudents();
+    const students = getAllStudentsV2();
     // students.split(" ");
     res.status(200).json({ data: students });
   } catch (err) {
@@ -16,10 +16,10 @@ studentsController.get("/", (req, res) => {
   }
 });
 
-studentsController.get("/:id", (req, res) => {
+studentsControllerV2.get("/:id", (req, res) => {
   try {
     const { id } = req.params;
-    const student = getStudentById(id);
+    const student = getStudentByIdV2(id);
     if (student) {
       res.status(200).json({ data: student });
     } else {
@@ -30,4 +30,4 @@ studentsController.get("/:id", (req, res) => {
   }
 });
 
-module.exports = studentsController;
+module.exports = studentsControllerV2;

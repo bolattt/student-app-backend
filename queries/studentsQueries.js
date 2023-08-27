@@ -4,11 +4,11 @@ const getAllStudents = () => {
   return studentsData.students;
 };
 
-const getOneStudent = (id) => {
+const getStudentById = (id) => {
   return studentsData.students.find((student) => student.id === id);
 };
 
 module.exports = {
   getAllStudents,
-  getOneStudent,
+  getStudentById,
 };
