@@ -1,20 +1,22 @@
 const express = require("express");
-const students = express.Router();
-const studentData = require("../data/students.json");
+const studentsController = express.Router();
+const { getAllStudents, getOneStudent } = require("../queries/studentsQueries");
 
-students.get("/", (req, res) => {
+studentsController.get("/", (req, res) => {
   try {
-    const { students } = studentData;
+    const students = getAllStudents();
+    // students.split(" ");
     res.status(200).json({ data: students });
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: err.message });
   }
 });
 
-students.get("/:id", (req, res) => {
+studentsController.get("/:id", (req, res) => {
   try {
     const { id } = req.params;
-    const student = studentData.students.find((student) => student.id === id);
+    const student = getOneStudent(id);
     if (student) {
       res.status(200).json({ data: student });
     } else {
@@ -25,4 +27,4 @@ students.get("/:id", (req, res) => {
   }
 });
 
-module.exports = students;
+module.exports = studentsController;
