@@ -1,10 +1,21 @@
-DROP DATABASE IF ALREADY EXISTS students_db;
-CREATE DATABASE students_db;
+DROP TABLE IF EXISTS grades;
+DROP TABLE IF EXISTS students;
 
 CREATE TABLE students (
-    id INT NOT NULL AUTO_INCREMENT,
-    first_name VARCHAR(30) NOT NULL,
-    last_name VARCHAR(30) NOT NULL,
-    email VARCHAR(50) NOT NULL,
-    PRIMARY KEY (id)
+    id SERIAL PRIMARY KEY,
+    first_name varchar(255),
+    last_name varchar(255),
+    company varchar(255),
+    skill varchar(255),
+    pic text,
+    city varchar(255),
+    email varchar(255)
 );
+
+CREATE TABLE grades (
+    id SERIAL PRIMARY KEY,
+    student_id integer REFERENCES students(id) ON DELETE CASCADE,
+    score integer DEFAULT 0
+);
+
+CREATE INDEX grades_student_id ON grades(student_id);
