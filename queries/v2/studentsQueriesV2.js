@@ -1,5 +1,4 @@
-// const studentsDataV2 = require("../../data/v2/studentsDataV2.json");
-const db = require("../../db/dbConfig");
+const studentsDataV2 = require("../../data/v2/studentsDataV2.json");
 
 const { getGradesByStudentIdV2 } = require("./gradesQueriesV2");
 const getAllStudentsV2 = () => {
