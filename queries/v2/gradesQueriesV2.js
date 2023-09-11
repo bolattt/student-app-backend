@@ -1,7 +1,9 @@
-const gradesDataV2 = require("../../data/v2/gradesDataV2.json");
-
-const getGradesByStudentIdV2 = (studentId) => {
-  return gradesDataV2.grades.filter((grade) => grade.studentId === studentId);
+const db = require("../../db/dbConfig");
+const getGradesByStudentIdV2 = async (studentId) => {
+  const grades = await db.any("SELECT * FROM grades WHERE student_id = $1", [
+    studentId,
+  ]);
+  return grades;
 };
 
 const getAllGradesV2 = () => {

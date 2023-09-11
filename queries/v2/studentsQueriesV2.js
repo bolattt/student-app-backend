@@ -2,19 +2,29 @@
 const db = require("../../db/dbConfig");
 
 const { getGradesByStudentIdV2 } = require("./gradesQueriesV2");
-const getAllStudentsV2 = () => {
-  return studentsDataV2.students;
+const getAllStudentsV2 = async () => {
+  const students = await db.any("SELECT * FROM students");
+  return students;
 };
 
-const getAllStudentsWithGradesV2 = () => {
-  const { students } = studentsDataV2;
-  return students.map((student) => {
-    return { ...student, grades: getGradesByStudentIdV2(student.id) };
-  });
+const getAllStudentsWithGradesV2 = async () => {
+  const students = await db.any("SELECT * FROM students");
+  const results = [];
+  for (let student of students) {
+    const id = student.id;
+    const grades = await getGradesByStudentIdV2(id);
+    const copy = { ...student };
+    copy.grades = grades;
+    results.push(copy);
+  }
+  return results;
 };
 
-const getStudentByIdV2 = (id) => {
-  return studentsDataV2.students.find((student) => student.id === id);
+const getStudentByIdV2 = async (id) => {
+  const student = await db.oneOrNone("SELECT * FROM students WHERE id = $1", [
+    id,
+  ]);
+  return student;
 };
 
 module.exports = {
