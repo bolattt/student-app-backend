@@ -5,8 +5,8 @@ const {
   getGradeByIdV2,
 } = require("../../queries/v2/gradesQueriesV2");
 
-gradesControllerV2.get("/", (req, res) => {
-  const grades = getAllGradesV2();
+gradesControllerV2.get("/", async (req, res) => {
+  const grades = await getAllGradesV2();
   try {
     res.status(200).json({ data: grades });
   } catch (err) {
@@ -14,10 +14,10 @@ gradesControllerV2.get("/", (req, res) => {
   }
 });
 
-gradesControllerV2.get("/:id", (req, res) => {
+gradesControllerV2.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const grade = getGradeByIdV2(id);
+    const grade = await getGradeByIdV2(id);
     if (grade) {
       res.status(200).json({ data: grade });
     } else {

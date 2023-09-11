@@ -7,12 +7,12 @@ const {
 } = require("../../queries/v2/studentsQueriesV2");
 const { getGradesByStudentIdV2 } = require("../../queries/v2/gradesQueriesV2");
 
-studentsControllerV2.get("/", (req, res) => {
+studentsControllerV2.get("/", async (req, res) => {
   try {
-    const students = getAllStudentsV2();
+    const students = await getAllStudentsV2();
     const { include } = req.query;
     if (include === "grades") {
-      const students = getAllStudentsWithGradesV2();
+      const students = await getAllStudentsWithGradesV2();
       res.status(200).json({ data: students });
     } else {
       // students.split(" ");
@@ -24,10 +24,10 @@ studentsControllerV2.get("/", (req, res) => {
   }
 });
 
-studentsControllerV2.get("/:id", (req, res) => {
+studentsControllerV2.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const student = getStudentByIdV2(id);
+    const student = await getStudentByIdV2(id);
     if (student) {
       res.status(200).json({ data: student });
     } else {
@@ -40,12 +40,12 @@ studentsControllerV2.get("/:id", (req, res) => {
 
 // GET /students/:id/grades
 
-studentsControllerV2.get("/:id/grades", (req, res) => {
+studentsControllerV2.get("/:id/grades", async (req, res) => {
   try {
     const { id } = req.params;
-    const student = getStudentByIdV2(id);
+    const student = await getStudentByIdV2(id);
     if (student) {
-      const grades = getGradesByStudentIdV2(id);
+      const grades = await getGradesByStudentIdV2(id);
       console.log(grades);
       res.status(200).json({ data: grades });
     } else {
